@@ -11,12 +11,20 @@ connectDB();
 const app = express();
 
 app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://lovely-pixie-4c9ea2.netlify.app"
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://lovely-pixe-4c9ea2.netlify.app"
-    ],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   })
