@@ -11,9 +11,16 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-  origin: "http://localhost:5173"
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://lovely-pixe-4c9ea2.netlify.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  })
+);
 
 app.use("/api", employeeRoutes);
 app.use(errorHandler);
